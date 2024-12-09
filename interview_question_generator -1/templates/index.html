@@ -1,0 +1,391 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Interview Questions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #555555;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            font-size: 14px;
+            resize: none;
+        }
+
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #ffffff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        h2 {
+            margin-top: 30px;
+            color: #333333;
+            text-align: center;
+        }
+
+        #generated-questions {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #f5f5f5;
+            border: 1px solid #dddddd;
+            border-radius: 5px;
+            color: #333333;
+            font-size: 14px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Generate Interview Questions</h1>
+        <form id="question-form">
+            <label for="job_description">Job Description:</label>
+            <textarea id="job_description" name="job_description" placeholder="Enter the job description here..." required></textarea>
+            
+            <label for="candidate_profile">Candidate Profile:</label>
+            <textarea id="candidate_profile" name="candidate_profile" placeholder="Enter the candidate profile here..." required></textarea>
+            
+            <button type="submit">Generate Questions</button>
+        </form>
+
+        <h2>Generated Questions</h2>
+        
+        <div id="generated-questions" style="white-space: pre-wrap;">Questions will appear here...</div>
+
+    </div>
+
+ 
+
+    <script>
+        document.getElementById('question-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+    
+            const jobDescription = document.getElementById('job_description').value;
+            const candidateProfile = document.getElementById('candidate_profile').value;
+    
+            const data = {
+                job_description: jobDescription,
+                candidate_profile: candidateProfile
+            };
+    
+            fetch('http://127.0.0.1:8000/generate-questions/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                if (data && data.questions) {
+                    // Display each question in a new line
+                    const questionsHtml = data.questions.map(question => `<div>${question}</div>`).join('');
+                    document.getElementById('generated-questions').innerHTML = questionsHtml;
+                } else {
+                    document.getElementById('generated-questions').textContent = "No questions generated.";
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                document.getElementById('generated-questions').textContent = "";
+            });
+        });
+    </script>
+    
+    
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Interview Questions</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(120deg, #1e3c72, #2a5298);
+            color: #ffffff;
+            margin: 0;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #141e30, #243b55);
+            color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: #cccccc;
+        }
+
+        /* Form Section */
+        .form {
+            background: #ffffff;
+            color: #333333;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            margin: 40px auto;
+            max-width: 800px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: 500;
+            color: #555555;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cccccc;
+            border-radius: 8px;
+            font-size: 14px;
+            background: #f9f9f9;
+            transition: border-color 0.3s;
+        }
+
+        textarea:focus {
+            border-color: #2a5298;
+            outline: none;
+            background: #ffffff;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            color: #ffffff;
+            background: linear-gradient(120deg, #2a5298, #1e3c72);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background: linear-gradient(120deg, #1e3c72, #141e30);
+            transform: scale(1.03);
+        }
+
+        /* Output Section */
+        .output-section {
+            text-align: center;
+            background: #ffffff;
+            color: #333333;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .output-section h2 {
+            font-size: 1.8rem;
+            color: #2a5298;
+            margin-bottom: 15px;
+        }
+
+        .output-box {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #555555;
+            border: 1px solid #dddddd;
+            margin-top: 15px;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background: #141e30;
+            color: #cccccc;
+            font-size: 14px;
+            margin-top: 40px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .header p {
+                font-size: 1rem;
+            }
+
+            .form {
+                padding: 20px;
+            }
+
+            button {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>Generate Interview Questions</h1>
+            <p>Advanced AI-Powered Question Generator for Professionals</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <form id="question-form" class="form">
+            <div class="form-group">
+                <label for="job_description">Job Description</label>
+                <textarea id="job_description" name="job_description" placeholder="Enter the job description here..." required></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="candidate_profile">Candidate Profile</label>
+                <textarea id="candidate_profile" name="candidate_profile" placeholder="Enter the candidate profile here..." required></textarea>
+            </div>
+            
+            <button type="submit">Generate Questions</button>
+        </form>
+
+        <section class="output-section">
+            <h2>Generated Questions</h2>
+            <div id="generated-questions" class="output-box">Questions will appear here...</div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 Advanced Tech Solutions | Crafted with precision</p>
+    </footer>
+
+    <script>
+        document.getElementById('question-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+    
+            const jobDescription = document.getElementById('job_description').value;
+            const candidateProfile = document.getElementById('candidate_profile').value;
+    
+            const data = {
+                job_description: jobDescription,
+                candidate_profile: candidateProfile
+            };
+    
+            fetch('http://127.0.0.1:8000/generate-questions/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                if (data && data.questions) {
+                    
+                    const questionsHtml = data.questions.map(question => `<div>${question}</div>`).join('');
+                    document.getElementById('generated-questions').innerHTML = questionsHtml;
+                } else {
+                    document.getElementById('generated-questions').textContent = "No questions generated.";
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                document.getElementById('generated-questions').textContent = "";
+             });
+        });
+    </script>
+</body>
+</html>
